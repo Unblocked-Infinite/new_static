@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tabbed Browser</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #222;
+    }
+
+    .tab-container {
+      display: flex;
+      align-items: center;
+      background-color: #333;
+      border-bottom: 1px solid #444;
+      padding: 5px;
+    }
+
+    .tab {
+  padding: 10px;
+  margin: 0 2px;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+  border: 1px solid #444;
+  border-bottom: none;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  flex-basis: calc(33.33% - 350px); /* Adjust the flex-basis property to make tabs three times wider */
+}
+
+
+    .tab.active {
+      background-color: #444;
+      border-bottom: 1px solid #fff;
+    }
+
+    .tab:hover {
+      background-color: #444;
+    }
+
+    .tab-close {
+      margin-left: 5px;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    .iframe-container {
+      height: calc(100vh - 50px);
+      border: 1px solid #444;
+    }
+
+    .iframe-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .add-tab-button {
+      padding: 5px 10px;
+      background-color: #333;
+      color: #fff;
+      cursor: pointer;
+      border: 1px solid #444;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="tab-container">
+    <div class="tab" data-tab-index="0" onclick="switchTab(event)">Tab 1</div>
+    <div class="add-tab-button" onclick="addTab()">+</div>
+  </div>
+  <div class="tab-content">
+    <div class="iframe-container">
+      <iframe id="iframe" src="index.html"></iframe>
+    </div>
+  </div>
+
+  <script>
+    var tabsContainer = document.querySelector('.tab-container');
+    var tabContent = document.querySelector('.tab-content');
+    var addTabButton = document.querySelector('.add-tab-button');
+    var iframe = document.getElementById('iframe');
+    var tabCount = 1; // Start with 1 tab
+
+    function addTab() {
+      var tab = document.createElement('div');
+      tab.className = 'tab';
+      tab.textContent = 'Tab ' + (tabCount + 1);
+      tab.dataset.tabIndex = tabCount;
+      tab.addEventListener('click', switchTab);
+      tab.innerHTML += '<span class="tab-close" onclick="removeTab(event)">x</span>';
+
+      tabsContainer.insertBefore(tab, addTabButton);
+      tabCount++;
+
+      switchTab({ target: tab });
+    }
+
+    function removeTab(event) {
+      var tab = event.target.parentNode;
+      var tabIndex = parseInt(tab.dataset.tabIndex);
+
+      if (tab.classList.contains('active')) {
+        var nextTab = tab.nextElementSibling || tab.previousElementSibling;
+        switchTab({ target: nextTab });
+      }
+
+      tab.remove();
+      tabCount--;
+
+      // Update the dataset index for remaining tabs
+      var tabs = document.querySelectorAll('.tab');
+      tabs.forEach(function(tab, index) {
+        tab.dataset.tabIndex = index;
+        tab.textContent = 'Tab ' + (index + 1);
+      });
+    }
+
+    function switchTab(event) {
+      var tab = event.target;
+      var tabIndex = parseInt(tab.dataset.tabIndex);
+
+      // Remove active class from all tabs
+      var tabs = document.querySelectorAll('.tab');
+      tabs.forEach(function(tab) {
+        tab.classList.remove('active');
+      });
+
+      // Add active class to the selected tab
+      tab.classList.add('active');
+
+      // Load the corresponding URL in the iframe
+      var urls = [
+        'index.html',
+        'index.html',
+        'index.html'
+      ];
+
+      if (tabIndex >= 0 && tabIndex < urls.length) {
+        iframe.src = urls[tabIndex];
+      } else {
+        iframe.src = 'index.html'; // Set iframe source to blank if the tab index is out of range
+      }
+    }
+  </script>
+</body>
+</html>
