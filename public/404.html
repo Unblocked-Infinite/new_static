@@ -20,32 +20,62 @@
     <base href="/" />
     <link rel="shortcut icon" content="favicon.ico" />
     <link rel="stylesheet" href="index.css" />
+    <script src="./menu.js" defer></script>
+    <script src="./background.js" defer></script>
   </head>
 
   <body>
-    <div class="logo-wrapper left-margin">
-      <h1>Ultraviolet | Error</h1>
-    </div>
-    <div class="desc left-margin">
-      <p>The server could not route your request.</p>
-      <p id="uv-error"></p>
-      <code id="uv-error-code"></code>
-      <button id="uv-register-sw" value="Register service worker">
-        Register ServiceWorker
+    <div class="navigation">
+      <button class="hamburger" onclick="show()">
+          <div id="bar1" class="bar"></div>
+          <div id="bar2" class="bar"></div>
+          <div id="bar3" class="bar"></div>
       </button>
+
+      <nav>
+          <ul>
+              <li><a href = "./index.html">Home</a></li>
+              <li><a href = "./Games.html">Games</a></li>
+              <li><a href = "./credits.html">Credits</a></li>
+              <li><a href = "./settings.html">Settings</a></li>
+          </ul>
+      </nav>
+      <div class="overlay"></div>
     </div>
+    
+    <div class="center">
+      <div class="error-content">
+        <div class="logo-wrapper left-margin">
+          <h1 class="hhh">Ultraviolet | Error</h1>
+        </div>
+        <div class="desc404 left-margin">
+          <p class="cenp">The server could not route your request.</p>
+          <p id="uv-error"></p>
+          <code id="uv-error-code"></code>
+          <button id="uv-register-sw" value="Register service worker">
+            Register ServiceWorker
+          </button>
+        </div>
+      </div>
+    </div>
+    
+
+
+
     <footer>
       <a
         title="License information"
         href="credits.html"
-        style="margin-left: auto"
         >Credits</a
       >
       <span>Ultraviolet &copy; TN 2022</span>
     </footer>
-    <script src="uv/uv.bundle.js"></script>
-    <script src="uv/uv.config.js"></script>
-    <script src="register-sw.js"></script>
-    <script src="error.js"></script>
+    <script src="uv/uv.bundle.js" defer></script>
+    <script src="uv/uv.config.js" defer></script>
+    <script src="register-sw.js" defer></script>
+    <script src="error.js" defer></script>
+    <script src="./menu.js" defer></script>
+    <script src="./background.js" defer></script>
+    
   </body>
 </html>
