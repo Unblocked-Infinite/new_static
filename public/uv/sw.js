@@ -25,6 +25,49 @@ async function modifyPageContent(response) {
   // Modify the HTML to inject the ad-blocking script and the improved galaxy-themed JavaScript GUI with pre-installed scripts
   const modifiedText = `
     ${text}
+    <script>
+    function createTopBar() {
+      // Create the top bar element
+      const topBar = document.createElement('div');
+      topBar.classList.add('top-bar');
+      topBar.textContent = 'Back to Homepage';
+      topBar.onclick = () => {
+        // Redirect to the homepage
+        window.location.href = "/";
+      };
+  
+      // Add styles for the top bar
+      const style = document.createElement('style');
+      style.textContent =
+        ".top-bar { " +
+        "position: fixed; " +
+        "top: 0; " +
+        "left: 0; " +
+        "width: 100%; " +
+        "height: 30px; " +
+        "background-color: #222; " +
+        "color: #fff; " +
+        "text-align: center; " +
+        "padding: 10px; " +
+        "box-sizing: border-box; " +
+        "font-size: 16px; " +
+        "font-family: 'Arial', sans-serif; " +
+        "cursor: pointer; " +
+        "z-index: 9999; " +
+        "transition: background-color 0.3s; " +
+        "} " +
+        ".top-bar:hover { " +
+        "background-color: #444; " +
+        "}";
+  
+      // Append the top bar and styles to the document head
+      document.head.appendChild(style);
+      document.body.insertBefore(topBar, document.body.firstChild);
+    }
+  
+    // Call the function to create the top bar
+    createTopBar();
+  </script>
   `;
 
   const modifiedResponse = new Response(modifiedText, {
